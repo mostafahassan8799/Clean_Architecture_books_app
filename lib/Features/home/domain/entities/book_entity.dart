@@ -1,9 +1,18 @@
-class BookEntity{
-  final String image;
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+class BookEntity {
+  final String bookId;
+  final String? image;
   final String title;
-  final String authorName;
-  final num price;
-  final num rating;
+  final String? authorName;
+  final num? price;
+  final num? rating;
 
-  BookEntity({required this.image, required this.title, required this.authorName, required this.price, required this.rating});
+  BookEntity({
+    required this.bookId,
+    required this.image,
+    required this.title,
+    required this.authorName,
+    required this.price,
+    required this.rating,
+  });
 }
