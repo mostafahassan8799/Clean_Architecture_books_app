@@ -16,8 +16,9 @@ import 'core/utils/app_router.dart';
 void main() async {
   Hive.registerAdapter(BookEntityAdapter());
   await Hive.initFlutter();
-  await Hive.openBox(kFeaturedBox);
-  await Hive.openBox(kNewestBox);
+  await Hive.openBox<BookEntity>(kFeaturedBox);
+  await Hive.openBox<BookEntity>(kNewestBox);
+  setupServiceLocator();
   runApp(DevicePreview(
     enabled: !kReleaseMode,
     builder: (context) => const Bookly(), // Wrap your app
@@ -32,9 +33,11 @@ class Bookly extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => FeaturedBooksCubit(FetchFeaturedBooksUseCase(
-            serviceLocator.get<HomeRepoImpl>(),
-          )),
+          create: (context) => FeaturedBooksCubit(
+            FetchFeaturedBooksUseCase(
+              serviceLocator.get<HomeRepoImpl>(),
+            ),
+          )..fetchFeaturedBooks(),
         ),
       ],
       child: MaterialApp.router(
